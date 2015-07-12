@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="eai04191">
+    <title>AssisToken</title>
+    <link href="https://bootswatch.com/cosmo/bootstrap.min.css" rel="stylesheet">
+    <link href="jumbotron-narrow.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="jquery.sprintf.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="assistoken.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+          <ul class="nav nav-pills pull-right">
+          <li><a href="https://twist-helper.herokuapp.com/" target="_blank">TwistHelper (Original)</a></li>
+          <li><a href="https://github.com/eai04191/AssisToken">Source Code on GitHub</a></li>
+        </ul>
+        <h3 class="text-muted">AssisToken</h3>
+      </div>
+      <div class="jumbotron">
+        <h1>AssisToken</h1>
+        <p class="lead">サクっとトークン取得してほにゃほにゃ</p>
+      </div>
+      <form>
+        <p>
+          <div class="input-group-btn">
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">自動入力<span class="caret"></span></button>
+            <ul id="consumer_list" class="dropdown-menu" role="menu">
+              <li><a href="#" data-ck="3nVuSoBZnx6U4vzUxf5w" data-cs="Bcs59EFbbsdF6Sl9Ng71smgStWEGwXXKSjYvPVt7qys">Twitter for Android</a></li>
+              <li><a href="#" data-ck="TgHNMa7WZE7Cxi1JbkAMQ" data-cs="SHy9mBMBPNj3Y17et9BF4g5XeqS4y3vkeW24PttDcY">Twitter for Windows</a></li>
+              <li><a href="#" data-ck="yN3DUNVO0Me63IAQdhTfCA" data-cs="c768oTKdzAjIYCmpSNIdZbGaG0t6rOhSFQP0S5uC79g">Twitter for Windows Phone</a></li>
+              <li><a href="#" data-ck="iAtYJ4HpUVfIUoNnif1DA" data-cs="172fOpzuZoYzNYaU3mMYvE8m8MEyLbztOdbrUolU">Twitter for Google TV</a></li>
+              <li><a href="#" data-ck="IQKbtAYlXLripLGPWd0HUA" data-cs="GgDYlkSvaPxGxC4X8liwpUoqKwwr3lCADbz8A7ADU">Twitter for iPhone</a></li>
+              <li><a href="#" data-ck="CjulERsDeqhhjSme66ECg" data-cs="IQWdVyqFxghAtURHGeGiWAsmCAGmdW3WmbEx6Hck">Twitter for iPad</a></li>
+              <li><a href="#" data-ck="3rJOl1ODzm9yZy63FACdg" data-cs="5jPoQ5kQvMJFDYRNE8bQ4rHuds4xJqhvgNJM4awaE8">Twitter for Mac</a></li>
+              <li><a href="#" data-ck="yT577ApRtZw51q4NPMPPOQ" data-cs="3neq3XqN5fO3obqwZoajavGFCUrC42ZfbrLXy5sCv8">TweetDeck</a></li>
+            </ul>
+          </div>
+        </p>
+        <p>
+          <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">CK</span>
+            <input id="CK" type="text" class="form-control" placeholder="Consumer Key">
+          </div>
+          </div>
+          <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">CS</span>
+            <input id="CS" type="text" class="form-control" placeholder="Consumer Secret">
+          </div>
+          </div>
+          <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">SN</span>
+            <input id="SN" type="text" class="form-control" placeholder="Username">
+          </div>
+          </div>
+          <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">PW</span>
+            <input id="PW" type="password" class="form-control" placeholder="Password">
+          </div>
+          </div>
+        </p>
+        <p>
+          <button id="xauth" type="button" class="btn btn-primary" data-toggle="modal" data-target="#auth_modal">取得</button>
+        </p>
+      </form>
+      <div class="modal fade" id="auth_modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="lead" id="loading_image" tabindex="-1" aria-hidden="true">
+                <p>Loading...</p>
+              </div>
+              <div id="success_area"class="form-group has-success has-feedback">
+                <label class="control-label">Login Success!</label>                
+                  <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">AT</span>
+                    <input id="success_msg_AT" class="form-control" onclick="this.select();" readonly="">
+                  </div>
+                  </div>
+                  <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">AS</span>
+                    <input id="success_msg_AS" class="form-control" onclick="this.select();" readonly="">
+                  </div>
+                  </div>
+                <label class="control-label">for TwistOauth</label>
+                <textarea class="form-control" id="success_twist_msg"></textarea>
+              </div>
+              <div id="error_area" class="form-group has-error has-feedback">
+                <label class="control-label">Login Failed...</label>
+                <textarea class="form-control" id="error_msg"></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <p>by　eai04191</p>
+      </div>
+    </div>
+  </body>
+</html>
